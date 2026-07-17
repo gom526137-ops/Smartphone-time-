@@ -578,7 +578,14 @@ document.getElementById("studyTime").innerHTML="00:00:00";
 document.getElementById("awayTime").innerHTML="00:00:00";
 
 updateScore();
+chartLabels=[];
+chartData=[];
 
+chart.data.labels=[];
+
+chart.data.datasets[0].data=[];
+
+chart.update();
 
 alert("학습 기록이 초기화되었습니다.");
 
