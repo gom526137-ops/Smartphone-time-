@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 집중도 분석 시스템</title>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 body{
     margin:0;
@@ -92,6 +94,12 @@ button{
     background:#2563eb;
     color:white;
 }
+
+#focusChart{
+    background:white;
+    border-radius:10px;
+    margin-top:20px;
+}
 </style>
 
 </head>
@@ -113,7 +121,7 @@ button{
 웹사이트 이탈<br>
 <span id="awayTime">00:00:00</span>
 </div>
-
+<canvas id="focusChart"></canvas>
 <button class="start" onclick="startStudy()">공부 시작</button>
 <button class="stop" onclick="stopStudy()">종료</button>
 
@@ -146,7 +154,34 @@ let totalStudy=0;
 let totalAway=0;
 
 let score=100;
+let chartLabels=[];
+let chartData=[];
 
+let chart = new Chart(
+document.getElementById("focusChart"),
+{
+type:"line",
+
+data:{
+labels:chartLabels,
+
+datasets:[{
+label:"집중도",
+data:chartData,
+borderWidth:3
+}]
+},
+
+options:{
+scales:{
+y:{
+min:0,
+max:100
+}
+}
+}
+
+});
 function startStudy(){
 
 studying=true;
@@ -177,10 +212,25 @@ totalStudy+=1000;
 
 document.getElementById("studyTime").innerHTML=format(totalStudy);
 
+
+// 10초마다 그래프 기록
+if(totalStudy % 10000 == 0){
+
+chartLabels.push(
+Math.floor(totalStudy/1000)+"초"
+);
+
+chartData.push(
+Math.floor(score)
+);
+
+chart.update();
+
+}
+
 }
 
 },1000);
-
 document.addEventListener("visibilitychange",()=>{
 
 if(!studying) return;
