@@ -455,13 +455,27 @@ document.getElementById("status").innerHTML="🟢 집중 중";
 function stopStudy(){
 
 studying=false;
+
 localStorage.setItem("studying","false");
-localStorage.removeItem("awayStart");
-alert(
-"오늘 공부시간 : "+format(totalStudy)+"\n"+
-"웹사이트 이탈 : "+format(totalAway)+"\n"+
-"집중도 : "+score+"점"
-);
+
+document.getElementById("popup").style.display="flex";
+
+document.getElementById("popupText").innerHTML=
+`
+오늘의 학습 분석 결과<br><br>
+
+공부 시간<br>
+<b>${format(totalStudy)}</b><br><br>
+
+웹사이트 이탈 시간<br>
+<b>${format(totalAway)}</b><br><br>
+
+최종 집중도<br>
+<b>${Math.floor(score)}%</b>
+
+`;
+
+document.getElementById("status").innerHTML="학습 종료";
 
 }
 
