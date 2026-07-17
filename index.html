@@ -147,7 +147,29 @@ h1{
 
 }
 
+.circle{
 
+    width:150px;
+
+    height:150px;
+
+    border-radius:50%;
+
+    margin:20px auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    conic-gradient(
+    #22c55e 100%,
+    #1e293b 0%
+    );
+
+}
 .green{
 
     color:#22c55e;
@@ -307,7 +329,11 @@ button:hover{
 
 <h1>AI 집중도 분석</h1>
 
-<div id="score" class="score green">100점</div>
+<div class="circle">
+    <div id="score">100%</div>
+</div>
+
+<p>현재 집중도</p>
 
 <div class="info">
 공부시간<br>
@@ -469,7 +495,9 @@ function updateScore(){
 
 let s=document.getElementById("score");
 
-s.innerHTML=score+"점";
+s.innerHTML=Math.floor(score)+"%";
+document.querySelector(".circle").style.background =
+`conic-gradient(#22c55e ${score}%, #1e293b ${score}%)`;
 
 s.className="score";
 
