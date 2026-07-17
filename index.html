@@ -344,8 +344,9 @@ let studying =
 localStorage.getItem("studying") === "true";
 
 let startTime;
-let awayStart;
 
+let awayStart =
+Number(localStorage.getItem("awayStart")) || null;
 let totalStudy=0;
 let totalAway=0;
 
@@ -353,7 +354,15 @@ let score=100;
 window.onload=function(){
 if(studying){
 
+if(localStorage.getItem("awayStart")){
+
+document.getElementById("status").innerHTML="🟡 학습 중단";
+
+}else{
+
 document.getElementById("status").innerHTML="🟢 집중 중";
+
+}
 
 }
 let oldStudy=localStorage.getItem("studyTime");
@@ -489,13 +498,13 @@ if(!studying) return;
 if(document.hidden){
 
 awayStart=Date.now();
-
+localStorage.setItem("awayStart", awayStart);
 document.getElementById("status").innerHTML="🟡 학습 중단";
 
 }else{
 
 let diff=Date.now()-awayStart;
-
+localStorage.removeItem("awayStart");
 totalAway+=diff;
 
 document.getElementById("awayTime").innerHTML=format(totalAway);
