@@ -340,7 +340,8 @@ button:hover{
 
 <script>
 
-let studying=false;
+let studying =
+localStorage.getItem("studying") === "true";
 
 let startTime;
 let awayStart;
@@ -350,7 +351,11 @@ let totalAway=0;
 
 let score=100;
 window.onload=function(){
+if(studying){
 
+document.getElementById("status").innerHTML="🟢 집중 중";
+
+}
 let oldStudy=localStorage.getItem("studyTime");
 let oldAway=localStorage.getItem("awayTime");
 let oldScore=localStorage.getItem("score");
@@ -421,7 +426,7 @@ max:100
 function startStudy(){
 
 studying=true;
-
+localStorage.setItem("studying","true");
 startTime=Date.now();
 
 document.getElementById("status").innerHTML="🟢 집중 중";
@@ -431,6 +436,7 @@ document.getElementById("status").innerHTML="🟢 집중 중";
 function stopStudy(){
 
 studying=false;
+localStorage.setItem("studying","false");
 
 alert(
 "오늘 공부시간 : "+format(totalStudy)+"\n"+
