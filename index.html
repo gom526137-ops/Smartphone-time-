@@ -388,9 +388,11 @@ updateScore();
 
 let savedStudy = 0;
 let savedAway = 0;
-let chartLabels=[];
-let chartData=[];
+let chartLabels =
+JSON.parse(localStorage.getItem("chartLabels")) || [];
 
+let chartData =
+JSON.parse(localStorage.getItem("chartData")) || [];
 let chart = new Chart(
 document.getElementById("focusChart"),
 {
@@ -460,7 +462,15 @@ Math.floor(score)
 );
 
 chart.update();
+localStorage.setItem(
+"chartLabels",
+JSON.stringify(chartLabels)
+);
 
+localStorage.setItem(
+"chartData",
+JSON.stringify(chartData)
+);
 }
 
 }
@@ -545,7 +555,13 @@ if(check){
 localStorage.removeItem("studyTime");
 localStorage.removeItem("awayTime");
 localStorage.removeItem("score");
+localStorage.removeItem("chartLabels");
+localStorage.removeItem("chartData");
 
+chartLabels=[];
+chartData=[];
+
+chart.update();
 totalStudy=0;
 totalAway=0;
 score=100;
