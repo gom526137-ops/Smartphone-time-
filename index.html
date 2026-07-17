@@ -349,6 +349,45 @@ let totalStudy=0;
 let totalAway=0;
 
 let score=100;
+window.onload=function(){
+
+let oldStudy=localStorage.getItem("studyTime");
+let oldAway=localStorage.getItem("awayTime");
+let oldScore=localStorage.getItem("score");
+
+
+if(oldStudy){
+
+totalStudy=Number(oldStudy);
+
+document.getElementById("studyTime").innerHTML=
+format(totalStudy);
+
+}
+
+
+if(oldAway){
+
+totalAway=Number(oldAway);
+
+document.getElementById("awayTime").innerHTML=
+format(totalAway);
+
+}
+
+
+if(oldScore){
+
+score=Number(oldScore);
+
+updateScore();
+
+}
+
+}
+
+let savedStudy = 0;
+let savedAway = 0;
 let chartLabels=[];
 let chartData=[];
 
@@ -406,7 +445,8 @@ if(studying){
 totalStudy+=1000;
 
 document.getElementById("studyTime").innerHTML=format(totalStudy);
-
+localStorage.setItem("studyTime", totalStudy);
+localStorage.setItem("score", score);
 
 // 10초마다 그래프 기록
 if(totalStudy % 10000 == 0){
@@ -443,6 +483,8 @@ let diff=Date.now()-awayStart;
 totalAway+=diff;
 
 document.getElementById("awayTime").innerHTML=format(totalAway);
+localStorage.setItem("awayTime", totalAway);
+localStorage.setItem("score", score);
 
 let minute=Math.floor(diff/60000);
 
