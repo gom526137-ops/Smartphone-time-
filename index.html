@@ -445,6 +445,7 @@ function startStudy(){
 
 studying=true;
 localStorage.setItem("studying","true");
+localStorage.removeItem("awayStart");
 startTime=Date.now();
 
 document.getElementById("status").innerHTML="🟢 집중 중";
@@ -455,7 +456,7 @@ function stopStudy(){
 
 studying=false;
 localStorage.setItem("studying","false");
-
+localStorage.removeItem("awayStart");
 alert(
 "오늘 공부시간 : "+format(totalStudy)+"\n"+
 "웹사이트 이탈 : "+format(totalAway)+"\n"+
@@ -512,9 +513,18 @@ document.getElementById("status").innerHTML="🟡 학습 중단";
 
 }else{
 
-let diff=Date.now()-awayStart;
+let savedAwayStart = Number(localStorage.getItem("awayStart"));
+
+if(!savedAwayStart){
+    document.getElementById("status").innerHTML="🟢 집중 중";
+    return;
+}
+
+let diff = Date.now() - savedAwayStart;
+
 localStorage.removeItem("awayStart");
-totalAway+=diff;
+
+totalAway += diff;
 
 document.getElementById("awayTime").innerHTML=format(totalAway);
 localStorage.setItem("awayTime", totalAway);
